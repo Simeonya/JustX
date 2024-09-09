@@ -3,11 +3,9 @@ package com.just.x.justx.forge;
 import com.mojang.logging.LogUtils;
 import net.minecraft.client.Minecraft;
 import net.minecraft.core.registries.Registries;
+import net.minecraft.world.flag.FeatureFlag;
 import net.minecraft.world.food.FoodProperties;
-import net.minecraft.world.item.BlockItem;
-import net.minecraft.world.item.CreativeModeTab;
-import net.minecraft.world.item.CreativeModeTabs;
-import net.minecraft.world.item.Item;
+import net.minecraft.world.item.*;
 import net.minecraft.world.level.block.Block;
 import net.minecraft.world.level.block.Blocks;
 import net.minecraft.world.level.block.state.BlockBehaviour;
@@ -29,12 +27,12 @@ import net.minecraftforge.registries.ForgeRegistries;
 import net.minecraftforge.registries.RegistryObject;
 import org.slf4j.Logger;
 
+import java.util.function.Consumer;
+
 @Mod(Justx.MODID)
 public class Justx {
 
-    // Mod ID
     public static final String MODID = "justx";
-    // Logger for logging information
     private static final Logger LOGGER = LogUtils.getLogger();
 
     // Deferred Registers for blocks, items, and creative mode tabs
@@ -43,31 +41,57 @@ public class Justx {
     public static final DeferredRegister<CreativeModeTab> CREATIVE_MODE_TABS = DeferredRegister.create(Registries.CREATIVE_MODE_TAB, MODID);
 
     // Example block and items
-    public static final RegistryObject<Block> EXAMPLE_BLOCK = BLOCKS.register("example_block", () -> new Block(BlockBehaviour.Properties.of().mapColor(MapColor.STONE)));
+   /* public static final RegistryObject<Block> EXAMPLE_BLOCK = BLOCKS.register("example_block", () -> new Block(BlockBehaviour.Properties.of().mapColor(MapColor.STONE)));
     public static final RegistryObject<Item> EXAMPLE_BLOCK_ITEM = ITEMS.register("example_block", () -> new BlockItem(EXAMPLE_BLOCK.get(), new Item.Properties()));
     public static final RegistryObject<Item> EXAMPLE_ITEM = ITEMS.register("example_item", () -> new Item(new Item.Properties().food(new FoodProperties.Builder().alwaysEat().nutrition(1).saturationMod(2f).build())));
     public static final RegistryObject<CreativeModeTab> EXAMPLE_TAB = CREATIVE_MODE_TABS.register("example_tab", () -> CreativeModeTab.builder().withTabsBefore(CreativeModeTabs.COMBAT).icon(() -> EXAMPLE_ITEM.get().getDefaultInstance()).displayItems((parameters, output) -> {
         output.accept(EXAMPLE_ITEM.get());
-    }).build());
+    }).build());*/
 
     // Constructor
     public Justx() {
-        // Get the mod event bus
         IEventBus modEventBus = FMLJavaModLoadingContext.get().getModEventBus();
-
-        // Register the setup methods for mod loading
         modEventBus.addListener(this::commonSetup);
         modEventBus.addListener(this::addCreative);
 
-        // Register the deferred registers to the mod event bus
+        BLOCKS.register("coal_generator", () -> new Block(BlockBehaviour.Properties.of().mapColor(MapColor.STONE).destroyTime(10.0f).explosionResistance(15.0f)));
+        BLOCKS.register("power_conduit", () -> new Block(BlockBehaviour.Properties.of().mapColor(MapColor.STONE).destroyTime(2.0f).explosionResistance(15.0f)));
+
+
+        BLOCKS.register("storage_core", () -> new Block(BlockBehaviour.Properties.of().mapColor(MapColor.STONE).destroyTime(20.0f).explosionResistance(15.0f)));
+        BLOCKS.register("storage_drives", () -> new Block(BlockBehaviour.Properties.of().mapColor(MapColor.STONE).destroyTime(20.0f).explosionResistance(15.0f)));
+        BLOCKS.register("storage_terminal", () -> new Block(BlockBehaviour.Properties.of().mapColor(MapColor.STONE).destroyTime(20.0f).explosionResistance(15.0f)));
+        BLOCKS.register("storage_crafting_terminal", () -> new Block(BlockBehaviour.Properties.of().mapColor(MapColor.STONE).destroyTime(20.0f).explosionResistance(15.0f)));
+        BLOCKS.register("storage_pattern_terminal", () -> new Block(BlockBehaviour.Properties.of().mapColor(MapColor.STONE).destroyTime(20.0f).explosionResistance(15.0f)));
+        BLOCKS.register("storage_conduit", () -> new Block(BlockBehaviour.Properties.of().mapColor(MapColor.STONE).destroyTime(20.0f).explosionResistance(15.0f)));
+        BLOCKS.register("storage_import", () -> new Block(BlockBehaviour.Properties.of().mapColor(MapColor.STONE).destroyTime(20.0f).explosionResistance(15.0f)));
+        BLOCKS.register("storage_export", () -> new Block(BlockBehaviour.Properties.of().mapColor(MapColor.STONE).destroyTime(20.0f).explosionResistance(15.0f)));
+        BLOCKS.register("storage_interface", () -> new Block(BlockBehaviour.Properties.of().mapColor(MapColor.STONE).destroyTime(20.0f).explosionResistance(15.0f)));
+
+        ITEMS.register("speed_upgrade", () -> new Item(new Item.Properties()));
+        ITEMS.register("storage_disk_1k", () -> new Item(new Item.Properties()));
+        ITEMS.register("storage_disk_4k", () -> new Item(new Item.Properties()));
+        ITEMS.register("storage_disk_16k", () -> new Item(new Item.Properties()));
+        ITEMS.register("storage_disk_64k", () -> new Item(new Item.Properties()));
+        ITEMS.register("storage_disk_256k", () -> new Item(new Item.Properties()));
+        ITEMS.register("storage_disk_1024k", () -> new Item(new Item.Properties()));
+
+
+
+
+        BLOCKS.getEntries().forEach(new Consumer<RegistryObject<Block>>() {
+            @Override
+            public void accept(RegistryObject<Block> blockRegistryObject) {
+                ITEMS.register(blockRegistryObject.getId().getPath(), () -> new BlockItem(blockRegistryObject.get(), new Item.Properties()));
+            }
+        });
+
+
+
         BLOCKS.register(modEventBus);
         ITEMS.register(modEventBus);
         CREATIVE_MODE_TABS.register(modEventBus);
-
-        // Register this class for server and other game events
         MinecraftForge.EVENT_BUS.register(this);
-
-        // Register the configuration
         ModLoadingContext.get().registerConfig(ModConfig.Type.COMMON, Config.SPEC);
     }
 
@@ -85,7 +109,7 @@ public class Justx {
     // Add items to the creative mode tab
     private void addCreative(BuildCreativeModeTabContentsEvent event) {
         if (event.getTabKey() == CreativeModeTabs.BUILDING_BLOCKS) {
-            event.accept(EXAMPLE_BLOCK_ITEM);
+            //event.accept(EXAMPLE_BLOCK_ITEM);
         }
     }
 
