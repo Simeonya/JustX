@@ -2,6 +2,7 @@
 run/
 .gradle/
 build/
+gradle/wrapper
 gradle-app.setting
 
 ## IntelliJ IDEA
