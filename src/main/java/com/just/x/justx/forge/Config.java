@@ -1,4 +1,4 @@
-package com.just.x.justx;
+package com.just.x.justx.forge;
 
 import net.minecraftforge.common.ForgeConfigSpec;
 
@@ -10,6 +10,7 @@ public class Config {
     public static final ForgeConfigSpec.IntValue magicNumber;
     public static final ForgeConfigSpec.ConfigValue<List<? extends String>> items;
     public static final ForgeConfigSpec.ConfigValue<String> magicNumberIntroduction;
+    public static final ForgeConfigSpec.ConfigValue<String> customWindowTitle;
 
     static {
         ForgeConfigSpec.Builder builder = new ForgeConfigSpec.Builder();
@@ -29,6 +30,10 @@ public class Config {
         // Define an introduction for the magic number
         magicNumberIntroduction = builder.comment("Introduction for the magic number")
                 .define("magicNumberIntroduction", "The magic number is: ");
+
+        // Define a custom window title
+        customWindowTitle = builder.comment("Custom window title")
+                .define("customWindowTitle", "JustX");
 
         // Build the configuration spec
         SPEC = builder.build();

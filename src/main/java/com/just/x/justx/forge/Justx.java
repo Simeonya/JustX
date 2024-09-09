@@ -1,4 +1,4 @@
-package com.just.x.justx;
+package com.just.x.justx.forge;
 
 import com.mojang.logging.LogUtils;
 import net.minecraft.client.Minecraft;
@@ -99,8 +99,11 @@ public class Justx {
     @Mod.EventBusSubscriber(modid = MODID, bus = Mod.EventBusSubscriber.Bus.MOD, value = Dist.CLIENT)
     public static class ClientModEvents {
 
+        // Client setup event
         @SubscribeEvent
         public static void onClientSetup(FMLClientSetupEvent event) {
+            String title = Config.customWindowTitle.get();
+            event.enqueueWork(() -> Minecraft.getInstance().getWindow().setTitle(title));
             LOGGER.info("HELLO FROM CLIENT SETUP");
             LOGGER.info("MINECRAFT NAME >> {}", Minecraft.getInstance().getUser().getName());
         }
