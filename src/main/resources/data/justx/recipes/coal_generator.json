@@ -1,0 +1,29 @@
+{
+  "type": "minecraft:crafting_shaped",
+  "pattern": [
+    "xax",
+    "aba",
+    "cdc"
+  ],
+  "key": {
+    "x": {
+      "item": "minecraft:iron_block"
+    },
+    "a": {
+      "item": "minecraft:iron_bars"
+    },
+    "b": {
+      "item": "minecraft:furnace"
+    },
+    "c": {
+      "item": "minecraft:iron_ingot"
+    },
+    "d": {
+      "item": "minecraft:redstone"
+    }
+  },
+  "result": {
+    "item": "justx:coal_generator",
+    "count": 1
+  }
+}

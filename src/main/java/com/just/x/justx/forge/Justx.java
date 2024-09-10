@@ -9,7 +9,9 @@ import net.minecraft.world.item.*;
 import net.minecraft.world.level.block.Block;
 import net.minecraft.world.level.block.Blocks;
 import net.minecraft.world.level.block.state.BlockBehaviour;
+import net.minecraft.world.level.block.state.properties.NoteBlockInstrument;
 import net.minecraft.world.level.material.MapColor;
+import net.minecraft.world.level.material.PushReaction;
 import net.minecraftforge.api.distmarker.Dist;
 import net.minecraftforge.common.MinecraftForge;
 import net.minecraftforge.event.BuildCreativeModeTabContentsEvent;
@@ -54,7 +56,8 @@ public class Justx {
         modEventBus.addListener(this::commonSetup);
         modEventBus.addListener(this::addCreative);
 
-        BLOCKS.register("coal_generator", () -> new Block(BlockBehaviour.Properties.of().mapColor(MapColor.STONE).destroyTime(10.0f).explosionResistance(15.0f)));
+        BLOCKS.register("coal_generator", () -> new Block(BlockBehaviour.Properties.of().mapColor(MapColor.STONE).strength(5f, 17f).instrument(NoteBlockInstrument.BASS).requiresCorrectToolForDrops().pushReaction(PushReaction.IGNORE)));
+
         BLOCKS.register("power_conduit", () -> new Block(BlockBehaviour.Properties.of().mapColor(MapColor.STONE).destroyTime(2.0f).explosionResistance(15.0f)));
 
 
